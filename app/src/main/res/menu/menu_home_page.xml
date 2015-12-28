@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".HomePage">
+    <item
+        android:id="@+id/new_topic_menu"
+        android:title="@string/new_topic_menu" />
+    <item
+        android:id="@+id/faq_menu"
+        android:title="@string/faq_menu" />
+</menu>

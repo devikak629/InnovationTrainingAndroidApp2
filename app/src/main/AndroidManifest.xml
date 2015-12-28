@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.devika.innovationtraining">
+
+    <application
+        android:debuggable="true"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".HomePage2"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_home_page2"
+            android:theme="@style/FullscreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".CongratsPage"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_congrats_page"
+            android:theme="@style/FullscreenTheme"></activity>
+        <activity
+            android:name=".KeepersPage"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_keepers_page"
+            android:theme="@style/FullscreenTheme"></activity>
+        <activity
+            android:name=".ProgressPage"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_progress_page"
+            android:theme="@style/FullscreenTheme"></activity>
+        <activity
+            android:name=".ReminderPage"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_reminder_page"
+            android:theme="@style/FullscreenTheme"></activity>
+        <activity
+            android:name=".faq"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_faq"
+            android:theme="@style/FullscreenTheme"></activity>
+        <activity
+            android:windowSoftInputMode="adjustPan"
+            android:name=".NewTopic"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_new_topic"
+            android:theme="@style/FullscreenTheme"></activity>
+    </application>
+
+</manifest>
