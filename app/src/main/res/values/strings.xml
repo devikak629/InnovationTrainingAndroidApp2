@@ -31,10 +31,17 @@
         <item>Fantastic job!</item>
     </string-array>
     <string-array name="topicsOfTheDay">
-        <item>How to maake ice cream</item>
-        <item>How to be a hero</item>
-        <item>How to Build a treehouse</item>
+        <item>How to create flourless pancakes</item>
+        <item>How to reduce food waste in restaurants</item>
+        <item>How to reduce food waste in your home</item>
+        <item>How to get kids to put away technology at the dinner table</item>
+        <item>Situations that are appropriate to bribe children</item>
+        <item>How to get young people to vote</item>
+        <item>Alternatives to traditional political debates</item>
+        <item>Ways you could get involved with local politics</item>
+        <item>Methods of keeping students off mobile phones in school</item>
     </string-array>
+    <string name="title_activity_splash">Splash</string>
 </resources>
 
 

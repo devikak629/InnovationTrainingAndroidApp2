@@ -4,9 +4,13 @@ import com.example.devika.innovationtraining.util.SystemUiHider;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
@@ -117,7 +121,7 @@ public class HomePage2 extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+       this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.setContentView(R.layout.home);
         //   setContentView(R.layout.home);
 
@@ -129,11 +133,11 @@ public class HomePage2 extends Activity {
         mSystemUiHider = SystemUiHider.getInstance(this, contentView, HIDER_FLAGS);
         mSystemUiHider.setup();
 
-       /**SharedPreferences settings = getSharedPreferences("Dictionary1", 0);
+    SharedPreferences settings = getSharedPreferences("Dictionary1", 0);
         long milis = settings.getLong("MidnightCalendar", 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.clear();
-        editor.commit();**/
+        editor.commit();
 
         mSystemUiHider
                 .setOnVisibilityChangeListener(new SystemUiHider.OnVisibilityChangeListener() {
@@ -200,6 +204,8 @@ public class HomePage2 extends Activity {
         te.setTypeface(tf);
         TextView tn = (TextView) findViewById(R.id.YourTopic);
         tn.setTypeface(tf);
+        TextView tm = (TextView) findViewById(R.id.textViewww);
+        tn.setTypeface(tf);
 
         RadioButton tq = (RadioButton) findViewById(R.id.radioButton);
         tq.setTypeface(tf);
@@ -214,7 +220,6 @@ public class HomePage2 extends Activity {
 
                 //  Log.e("n", "nextWasClicked");
 
-
                 Log.e("GETTOPICSTRING", getTopicString().toString());
                 nextScreen.putExtra("Topic", getTopicString().toString());
                 SharedPreferences settings = getSharedPreferences("Dictionary1", 0);
@@ -228,6 +233,8 @@ public class HomePage2 extends Activity {
 
 
                 setEnable(false);
+                ((RadioButton) findViewById(R.id.radioButton)).setText(settings.getString("Topic", ""));
+                ((TextView) findViewById(R.id.YourTopic)).setText("");
                 startActivity(nextScreen);
             }
         });
@@ -266,7 +273,7 @@ public class HomePage2 extends Activity {
 
         if(b==false){
         ((EditText)findViewById(R.id.YourTopic)).setInputType(InputType.TYPE_NULL);}
-        else{
+        else {
             ((EditText)findViewById(R.id.YourTopic)).setInputType(InputType.TYPE_CLASS_TEXT);}
     }
 
@@ -301,7 +308,7 @@ public class HomePage2 extends Activity {
     Runnable mHideRunnable = new Runnable() {
         @Override
         public void run() {
-            mSystemUiHider.show();
+            mSystemUiHider.hide();
         }
     };
 

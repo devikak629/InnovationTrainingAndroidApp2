@@ -245,6 +245,14 @@ public class NewTopic extends Activity {
         tk.setTypeface(tc);
 
 
+        ((EditText)findViewById(id.idea1text)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((EditText) findViewById(id.idea1text)).setText("");
+            }
+        });
+
+
     }
     private void setEnable(boolean b) {
         ((EditText)findViewById(id.idea1text)).setEnabled(b);

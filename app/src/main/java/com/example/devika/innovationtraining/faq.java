@@ -4,12 +4,14 @@ import com.example.devika.innovationtraining.util.SystemUiHider;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.TextView;
 
 
 /**
@@ -116,6 +118,10 @@ public class faq extends Activity {
         // while interacting with the UI.
         //   findViewById(R.id.topicNext).setOnTouchListener(mDelayHideTouchListener);
         //   findViewById(R.id.faqbutton).setOnTouchListener(mDelayHideTouchListener);
+
+        TextView tv = (TextView) findViewById(R.id.textView2);
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/Anke.ttf");
+        tv.setTypeface(tf);
     }
 
     @Override
