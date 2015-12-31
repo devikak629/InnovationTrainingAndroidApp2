@@ -10,6 +10,7 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
@@ -22,6 +23,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import android.view.Window;
+import android.content.SharedPreferences;
 
 //ToDo: when timer is up, put a button there that takes you to home page
 //ToDo: while timer is going, open app to that page
@@ -73,21 +75,35 @@ public class CongratsPage extends Activity {
         return inspirationalMessages[x];
     }
 
+    private Calendar midnightCalendarFactory(){
+        Calendar midnightCalendar = Calendar.getInstance();
+        midnightCalendar.add(Calendar.DAY_OF_YEAR, 1);
+        midnightCalendar.add(Calendar.HOUR_OF_DAY, 0);
+        midnightCalendar.set(Calendar.MINUTE, 0);
+        midnightCalendar.set(Calendar.SECOND, 0);
+        midnightCalendar.set(Calendar.MILLISECOND, 0);
+
+        return midnightCalendar;
+
+        //Log.e()
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.setContentView(R.layout.activity_congrats_page);
 
+       Calendar midnightCalendar = midnightCalendarFactory();
+        midnightCalendar.getTimeInMillis();
+      SharedPreferences settings = getSharedPreferences("Dictionary1", 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putLong( "MidnightCalendar",midnightCalendar.getTimeInMillis());
+        editor.commit();
         text = (TextView) this.findViewById(R.id.timer);
 
 
-        Calendar c = Calendar.getInstance();
-        c.add(Calendar.DAY_OF_MONTH, 1);
-        c.set(Calendar.HOUR_OF_DAY, 0);
-        c.set(Calendar.MINUTE, 0);
-        c.set(Calendar.SECOND, 0);
-        c.set(Calendar.MILLISECOND, 0);
+        Calendar c = midnightCalendarFactory();
         long howMany = (c.getTimeInMillis() - System.currentTimeMillis());
         countDownTimer = new TwentyFourHoursCountDownTimer(howMany, interval);
         if (text != null) {

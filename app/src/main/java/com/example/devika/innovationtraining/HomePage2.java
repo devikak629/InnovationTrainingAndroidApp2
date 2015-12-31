@@ -5,20 +5,27 @@ import com.example.devika.innovationtraining.util.SystemUiHider;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.InputType;
 import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import java.util.Calendar;
 
 //ToDo: make topic that they choose appear on the "topic here" section of the next page
 //ToDo: make topic uneditable while timer is on, and reset when timer is up
@@ -59,6 +66,13 @@ public class HomePage2 extends Activity {
      */
     private SystemUiHider mSystemUiHider;
 
+    private String selectString() {
+        Resources res = getResources();
+        String[] topicsOfTheDay = res.getStringArray(R.array.topicsOfTheDay);
+        int x = (int) (Math.random() * topicsOfTheDay.length);
+        return topicsOfTheDay[x];
+    }
+
     private CharSequence getTopicString() {
 
         if (((RadioButton) findViewById(R.id.radioButton)).isChecked()) {
@@ -71,6 +85,33 @@ public class HomePage2 extends Activity {
             return ((TextView) findViewById(R.id.YourTopic)).getText();
         }
 
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        Calendar c = Calendar.getInstance();
+        SharedPreferences settings = getSharedPreferences("Dictionary1", 0);
+        long milis = settings.getLong("MidnightCalendar", 0);
+
+        if(milis==0){
+            return;
+        }
+        else{
+        if(c.getTimeInMillis()<milis){
+            Log.e("DEVIKA", "HOMEPAGE---TIME IS LESS");
+            ((RadioButton) findViewById(R.id.radioButton)).setText(settings.getString("Topic", ""));
+            ((TextView) findViewById(R.id.YourTopic)).setText("");
+            setEnable(false);
+        }
+        else if(c.getTimeInMillis()>=milis) {
+            SharedPreferences.Editor editor = settings.edit();
+            editor.clear();
+            editor.commit();
+            finish();
+            startActivity(getIntent());
+        }
+        }
     }
 
     @Override
@@ -87,6 +128,12 @@ public class HomePage2 extends Activity {
         // this activity.
         mSystemUiHider = SystemUiHider.getInstance(this, contentView, HIDER_FLAGS);
         mSystemUiHider.setup();
+
+       /**SharedPreferences settings = getSharedPreferences("Dictionary1", 0);
+        long milis = settings.getLong("MidnightCalendar", 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.clear();
+        editor.commit();**/
 
         mSystemUiHider
                 .setOnVisibilityChangeListener(new SystemUiHider.OnVisibilityChangeListener() {
@@ -170,11 +217,17 @@ public class HomePage2 extends Activity {
 
                 Log.e("GETTOPICSTRING", getTopicString().toString());
                 nextScreen.putExtra("Topic", getTopicString().toString());
+                SharedPreferences settings = getSharedPreferences("Dictionary1", 0);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putString("Topic",getTopicString().toString());
+                editor.commit();
+
 
 
                 //  Log.e("n", "YourTextEquals " + tn.getText());
 
 
+                setEnable(false);
                 startActivity(nextScreen);
             }
         });
@@ -188,9 +241,33 @@ public class HomePage2 extends Activity {
             }
         });
 
+        ((RadioButton) findViewById(R.id.radioButton)).setText(selectString());
+
         // TextView tu = (TextView) findViewById(R.id.textView900);
         //tu.setTypeface(tf);
 
+
+        ((EditText)findViewById(R.id.YourTopic)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((EditText)findViewById(R.id.YourTopic)).setText("");
+
+
+            }
+        });
+    }
+
+
+    private void setEnable(boolean b) {
+        ((RadioGroup)findViewById(R.id.radiogroup)).setEnabled(b);
+        ((RadioButton)findViewById(R.id.radioButton)).setEnabled(b);
+        ((RadioButton)findViewById(R.id.radioButton2)).setEnabled(b);
+        ((EditText)findViewById(R.id.YourTopic)).setEnabled(b);
+
+        if(b==false){
+        ((EditText)findViewById(R.id.YourTopic)).setInputType(InputType.TYPE_NULL);}
+        else{
+            ((EditText)findViewById(R.id.YourTopic)).setInputType(InputType.TYPE_CLASS_TEXT);}
     }
 
 

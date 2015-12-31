@@ -5,19 +5,25 @@ import com.example.devika.innovationtraining.util.SystemUiHider;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.InputType;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.content.res.Configuration;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.view.Window;
+
+import java.util.Calendar;
 
 import static com.example.devika.innovationtraining.R.*;
 
@@ -59,6 +65,44 @@ public class NewTopic extends Activity {
      * The instance of the {@link SystemUiHider} for this activity.
      */
     private SystemUiHider mSystemUiHider;
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        Calendar c = Calendar.getInstance();
+        SharedPreferences settings = getSharedPreferences("Dictionary1", 0);
+        long milis = settings.getLong("MidnightCalendar", 0);
+
+        if(milis==0){
+            return;
+        }
+        else{
+            if(c.getTimeInMillis()<milis){
+                Log.e("DEVIKA", "NEWTOPIC---TIME IS LESS");
+
+
+                ((EditText) findViewById(id.idea1text)).setText(settings.getString("idea1", ""));
+                ((EditText) findViewById(id.idea2text)).setText(settings.getString("idea2", ""));
+                ((EditText) findViewById(id.idea3text)).setText(settings.getString("idea3", ""));
+                ((EditText) findViewById(id.idea4text)).setText(settings.getString("idea4", ""));
+                ((EditText) findViewById(id.idea5text)).setText(settings.getString("idea5", ""));
+                ((EditText) findViewById(id.idea6text)).setText(settings.getString("idea6", ""));
+                ((EditText) findViewById(id.idea7text)).setText(settings.getString("idea7", ""));
+                ((EditText) findViewById(id.idea8text)).setText(settings.getString("idea8", ""));
+                ((EditText) findViewById(id.idea9text)).setText(settings.getString("idea9", ""));
+                ((EditText) findViewById(id.idea10text)).setText(settings.getString("idea10", ""));
+
+                setEnable(false);
+            }
+            else if(c.getTimeInMillis()>=milis) {
+                SharedPreferences.Editor editor = settings.edit();
+                editor.remove("MidnightCalendar");
+                editor.commit();
+                finish();
+                startActivity(getIntent());
+            }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,7 +181,7 @@ public class NewTopic extends Activity {
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
-        findViewById(id.topicNext).setOnTouchListener(mDelayHideTouchListener);
+       findViewById(id.topicNext).setOnTouchListener(mDelayHideTouchListener);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -147,12 +191,29 @@ public class NewTopic extends Activity {
         }
 
 
-        TextView topicNext = (TextView) findViewById(id.textView99);
+        Button topicNext = (Button) findViewById(id.topicNext);
         topicNext.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 Intent nextScreen = new Intent(getApplicationContext(), CongratsPage.class);
                 Log.e("n", "nextWasClicked");
+
+                SharedPreferences settings = getSharedPreferences("Dictionary1", 0);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putString("idea1", ((EditText)findViewById(id.idea1text)).getText().toString());
+                editor.putString("idea2", ((EditText)findViewById(id.idea2text)).getText().toString());
+                editor.putString("idea3", ((EditText)findViewById(id.idea3text)).getText().toString());
+                editor.putString("idea4", ((EditText)findViewById(id.idea4text)).getText().toString());
+                editor.putString("idea5", ((EditText)findViewById(id.idea5text)).getText().toString());
+                editor.putString("idea6", ((EditText)findViewById(id.idea6text)).getText().toString());
+                editor.putString("idea7", ((EditText)findViewById(id.idea7text)).getText().toString());
+                editor.putString("idea8", ((EditText)findViewById(id.idea8text)).getText().toString());
+                editor.putString("idea9", ((EditText)findViewById(id.idea9text)).getText().toString());
+                editor.putString("idea10", ((EditText)findViewById(id.idea10text)).getText().toString());
+                editor.commit();
+
+                setEnable(false);
                 startActivity(nextScreen);
+
             }
         });
 
@@ -184,6 +245,42 @@ public class NewTopic extends Activity {
         tk.setTypeface(tc);
 
 
+    }
+    private void setEnable(boolean b) {
+        ((EditText)findViewById(id.idea1text)).setEnabled(b);
+        ((EditText)findViewById(id.idea2text)).setEnabled(b);
+        ((EditText)findViewById(id.idea3text)).setEnabled(b);
+        ((EditText)findViewById(id.idea4text)).setEnabled(b);
+        ((EditText)findViewById(id.idea5text)).setEnabled(b);
+        ((EditText)findViewById(id.idea6text)).setEnabled(b);
+        ((EditText)findViewById(id.idea7text)).setEnabled(b);
+        ((EditText)findViewById(id.idea8text)).setEnabled(b);
+        ((EditText)findViewById(id.idea9text)).setEnabled(b);
+        ((EditText)findViewById(id.idea10text)).setEnabled(b);
+
+        if(b==false){
+            ((EditText)findViewById(id.idea1text)).setInputType(InputType.TYPE_NULL);
+            ((EditText)findViewById(id.idea2text)).setInputType(InputType.TYPE_NULL);
+            ((EditText)findViewById(id.idea3text)).setInputType(InputType.TYPE_NULL);
+            ((EditText)findViewById(id.idea4text)).setInputType(InputType.TYPE_NULL);
+            ((EditText)findViewById(id.idea5text)).setInputType(InputType.TYPE_NULL);
+            ((EditText)findViewById(id.idea6text)).setInputType(InputType.TYPE_NULL);
+            ((EditText)findViewById(id.idea7text)).setInputType(InputType.TYPE_NULL);
+            ((EditText)findViewById(id.idea8text)).setInputType(InputType.TYPE_NULL);
+            ((EditText)findViewById(id.idea9text)).setInputType(InputType.TYPE_NULL);
+            ((EditText)findViewById(id.idea10text)).setInputType(InputType.TYPE_NULL);}
+        else{
+                ((EditText) findViewById(id.idea1text)).setInputType(InputType.TYPE_CLASS_TEXT);
+                ((EditText) findViewById(id.idea2text)).setInputType(InputType.TYPE_CLASS_TEXT);
+                ((EditText) findViewById(id.idea3text)).setInputType(InputType.TYPE_CLASS_TEXT);
+                ((EditText) findViewById(id.idea4text)).setInputType(InputType.TYPE_CLASS_TEXT);
+                ((EditText) findViewById(id.idea5text)).setInputType(InputType.TYPE_CLASS_TEXT);
+                ((EditText) findViewById(id.idea6text)).setInputType(InputType.TYPE_CLASS_TEXT);
+                ((EditText) findViewById(id.idea7text)).setInputType(InputType.TYPE_CLASS_TEXT);
+                ((EditText) findViewById(id.idea8text)).setInputType(InputType.TYPE_CLASS_TEXT);
+                ((EditText) findViewById(id.idea9text)).setInputType(InputType.TYPE_CLASS_TEXT);
+                ((EditText) findViewById(id.idea10text)).setInputType(InputType.TYPE_CLASS_TEXT);
+            }
     }
 
 

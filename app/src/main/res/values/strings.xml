@@ -30,4 +30,11 @@
         <item>Great job!</item>
         <item>Fantastic job!</item>
     </string-array>
+    <string-array name="topicsOfTheDay">
+        <item>How to maake ice cream</item>
+        <item>How to be a hero</item>
+        <item>How to Build a treehouse</item>
+    </string-array>
 </resources>
+
+
