@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Html;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -122,6 +123,9 @@ public class faq extends Activity {
         TextView tv = (TextView) findViewById(R.id.textView2);
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/Anke.ttf");
         tv.setTypeface(tf);
+
+        TextView foo = (TextView)findViewById(R.id.textView2);
+        foo.setText(Html.fromHtml(getString(R.string.faq)));
     }
 
     @Override

@@ -29,7 +29,15 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.parse.CountCallback;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.FindCallback;
+
 import java.util.Calendar;
+import java.util.List;
 
 //ToDo: make topic that they choose appear on the "topic here" section of the next page
 //ToDo: make topic uneditable while timer is on, and reset when timer is up
@@ -70,11 +78,33 @@ public class HomePage2 extends Activity {
      */
     private SystemUiHider mSystemUiHider;
 
-    private String selectString() {
-        Resources res = getResources();
-        String[] topicsOfTheDay = res.getStringArray(R.array.topicsOfTheDay);
-        int x = (int) (Math.random() * topicsOfTheDay.length);
-        return topicsOfTheDay[x];
+    private void selectString() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Topics"); //where are we askin question
+
+
+        query.countInBackground(new CountCallback () {
+
+
+            @Override
+            public void done(int i, ParseException e) {
+                int x = (int) (Math.random() * i) + 1;
+
+                ParseQuery<ParseObject> query2 = ParseQuery.getQuery("Topics");
+                query2.whereEqualTo("num", x);  //what are we asking for, asking for the number that is 2
+
+                query2.findInBackground(new FindCallback<ParseObject>() {
+                    public void done(List<ParseObject> topics, ParseException e) {
+                        if (e == null) {
+                            ((RadioButton) findViewById(R.id.radioButton)).setText(topics.get(0).getString("topicText"));
+                            Log.d("DEVIKA", "Retrieved " + topics.get(0).getString("topicText") + " scores");
+                        } else {
+                            Log.d("DEVIKA", "Error: " + e.getMessage());
+                        }
+                    }
+                });
+            }
+        });
+
     }
 
     private CharSequence getTopicString() {
@@ -98,18 +128,24 @@ public class HomePage2 extends Activity {
         SharedPreferences settings = getSharedPreferences("Dictionary1", 0);
         long milis = settings.getLong("MidnightCalendar", 0);
 
+        Log.e("DEVIKA", "WE ARE AT ONRESUME");
+
         if(milis==0){
+
+            Log.e("DEVIKA", "MILIS IS ZERO");
             return;
         }
         else{
         if(c.getTimeInMillis()<milis){
             Log.e("DEVIKA", "HOMEPAGE---TIME IS LESS");
-            ((RadioButton) findViewById(R.id.radioButton)).setText(settings.getString("Topic", ""));
+          ((RadioButton) findViewById(R.id.radioButton)).setText(settings.getString("Topic", ""));
             ((TextView) findViewById(R.id.YourTopic)).setText("");
+            ((RadioButton) findViewById(R.id.radioButton)).setChecked(true);
             setEnable(false);
         }
         else if(c.getTimeInMillis()>=milis) {
-            SharedPreferences.Editor editor = settings.edit();
+            Log.e("DEVIKA", "MILIS IS MORE");
+           SharedPreferences.Editor editor = settings.edit();
             editor.clear();
             editor.commit();
             finish();
@@ -133,11 +169,11 @@ public class HomePage2 extends Activity {
         mSystemUiHider = SystemUiHider.getInstance(this, contentView, HIDER_FLAGS);
         mSystemUiHider.setup();
 
-    SharedPreferences settings = getSharedPreferences("Dictionary1", 0);
-        long milis = settings.getLong("MidnightCalendar", 0);
+ /**SharedPreferences settings = getSharedPreferences("Dictionary1", 0);
+       long milis = settings.getLong("MidnightCalendar", 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.clear();
-        editor.commit();
+        editor.commit();**/
 
         mSystemUiHider
                 .setOnVisibilityChangeListener(new SystemUiHider.OnVisibilityChangeListener() {
@@ -205,7 +241,7 @@ public class HomePage2 extends Activity {
         TextView tn = (TextView) findViewById(R.id.YourTopic);
         tn.setTypeface(tf);
         TextView tm = (TextView) findViewById(R.id.textViewww);
-        tn.setTypeface(tf);
+        tm.setTypeface(tf);
 
         RadioButton tq = (RadioButton) findViewById(R.id.radioButton);
         tq.setTypeface(tf);
@@ -224,7 +260,7 @@ public class HomePage2 extends Activity {
                 nextScreen.putExtra("Topic", getTopicString().toString());
                 SharedPreferences settings = getSharedPreferences("Dictionary1", 0);
                 SharedPreferences.Editor editor = settings.edit();
-                editor.putString("Topic",getTopicString().toString());
+                editor.putString("Topic", getTopicString().toString());
                 editor.commit();
 
 
@@ -234,6 +270,7 @@ public class HomePage2 extends Activity {
 
                 setEnable(false);
                 ((RadioButton) findViewById(R.id.radioButton)).setText(settings.getString("Topic", ""));
+                ((RadioButton) findViewById(R.id.radioButton)).setChecked(true);
                 ((TextView) findViewById(R.id.YourTopic)).setText("");
                 startActivity(nextScreen);
             }
@@ -248,7 +285,7 @@ public class HomePage2 extends Activity {
             }
         });
 
-        ((RadioButton) findViewById(R.id.radioButton)).setText(selectString());
+        selectString();
 
         // TextView tu = (TextView) findViewById(R.id.textView900);
         //tu.setTypeface(tf);
@@ -285,7 +322,7 @@ public class HomePage2 extends Activity {
         // Trigger the initial hide() shortly after the activity has been
         // created, to briefly hint to the user that UI controls
         // are available.
-        delayedHide(100);
+        delayedHide(0);
     }
 
 
@@ -298,7 +335,8 @@ public class HomePage2 extends Activity {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
             if (AUTO_HIDE) {
-                delayedHide(AUTO_HIDE_DELAY_MILLIS);
+                delayedHide(0);
+               // AUTO_HIDE_DELAY_MILLIS
             }
             return false;
         }

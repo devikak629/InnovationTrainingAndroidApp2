@@ -75,14 +75,28 @@ public class CongratsPage extends Activity {
         return inspirationalMessages[x];
     }
 
-    private Calendar midnightCalendarFactory(){
+    // Method to start the service
+    public void startService() {
+        startService(new Intent(getBaseContext(), CountDownService.class));
+        Log.e("DEVIKA", "SERVICE STARTED 2");
+    }
+
+    // Method to stop the service
+    public void stopService() {
+        stopService(new Intent(getBaseContext(), CountDownService.class));
+    }
+
+    public static Calendar midnightCalendarFactory(){
+
         Calendar midnightCalendar = Calendar.getInstance();
-        midnightCalendar.add(Calendar.DAY_OF_YEAR, 1);
-        midnightCalendar.add(Calendar.HOUR_OF_DAY, 0);
+        /*midnightCalendar.add(Calendar.DAY_OF_YEAR, 1);
+        midnightCalendar.set(Calendar.HOUR_OF_DAY, 0);
         midnightCalendar.set(Calendar.MINUTE, 0);
         midnightCalendar.set(Calendar.SECOND, 0);
         midnightCalendar.set(Calendar.MILLISECOND, 0);
-
+    */
+        midnightCalendar.add(Calendar.SECOND, 30);
+        midnightCalendar.set(Calendar.MILLISECOND, 0);
         return midnightCalendar;
 
         //Log.e()
@@ -110,6 +124,8 @@ public class CongratsPage extends Activity {
             text.setText(text.getText() + countDownTimer.timeFromMillis(howMany));
         }
         countDownTimer.start();
+        Log.e("DEVIKA", "SERVICE STARTED");
+        startService();
 
         /**    final View controlsView = findViewById(R.id.fullscreen_content_controls);
          final View contentView = findViewById(R.id.fullscreen_content);

@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.devika.innovationtraining" >
-
+    package="com.example.devika.innovationtraining"
+    >
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
+        android:name= "InnovationTraining"
         android:allowBackup="true"
-        android:debuggable="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
+
+
+
         <activity
-            android:name=".Splash"
+            android:name="Splash"
             android:label="@string/title_activity_splash"
             android:launchMode="singleInstance"
             android:noHistory="true">
@@ -63,6 +68,15 @@
             android:label="@string/title_activity_new_topic"
             android:theme="@style/FullscreenTheme"
             android:windowSoftInputMode="adjustPan" />
+
+        <service android:name=".CountDownService" />
+
+        <meta-data
+            android:name="com.parse.APPLICATION_ID"
+            android:value="slplaOfyhhCsE54RmsudPGLTdcDfOZBM4rvbDLDc" />
+        <meta-data
+            android:name="com.parse.CLIENT_KEY"
+            android:value="JCArx3XXQ7XNU2DTpz9gdfselWIRmhTKroJH91cI" />
     </application>
 
 </manifest>

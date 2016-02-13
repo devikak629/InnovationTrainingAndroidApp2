@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
+import com.parse.ParseObject;
 
 
 public class Splash extends ActionBarActivity {
@@ -22,6 +23,10 @@ public class Splash extends ActionBarActivity {
         setContentView(R.layout.activity_splash);
         final View contentView = findViewById(R.id.contentView);
         getSupportActionBar().hide();
+
+        /**ParseObject testObject = new ParseObject("TestObject");
+        testObject.put("foo", "bar");
+        testObject.saveInBackground();**/
 
         contentView.setOnClickListener(new View.OnClickListener() {
             @Override

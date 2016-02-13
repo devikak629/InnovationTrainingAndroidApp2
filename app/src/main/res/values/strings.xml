@@ -18,7 +18,7 @@
     <string name="title_activity_reminder_page">ReminderPage</string>
 
     <string name="title_activity_faq">faq</string>
-    <string name="Home_Page2_Options">Topic of the Day</string>
+    <string name="Home_Page2_Options">Loading Topic of the Day...</string>
     <string name="stringthing">Next</string>
 
     <string name="title_activity_new_topic">NewTopic</string>
@@ -42,6 +42,83 @@
         <item>Methods of keeping students off mobile phones in school</item>
     </string-array>
     <string name="title_activity_splash">Splash</string>
+
+    <string name="faq">
+<![CDATA[
+<h2>Frequently Asked Questions</h2><br>
+<b>How to use the app?</b>
+
+<p>Using the app is simple. Once per day 1) open the app; 2) take a look at the topic of the day and decide if
+
+you want to use that topic or choose your own topic—anything you want to think about is OK; 3) enter
+
+ten ideas about that topic—it usually gets challenging around idea number five; 4) click the done button;
+
+5) and that’s it—just do this every day and your innovation or creativity should increase in 3-6 months.</p>
+
+<b>I want to save my ideas, how do I do that?</b>
+
+<p>The idea of the app is to increase your creativity and innovation. Its not designed to be a record of your
+
+ideas. If an idea is really great you will remember it. All of the others—just jot them down in the app and
+
+let them go. It is about the process not the ideas you come up with.</p>
+
+<b>What if I don’t like your topic?</b>
+
+<p>No problem, if you don’t like the topic of the day just come up with your own topic. Coming up with a
+
+topic of the day that relates to your life and interests is also a great way to improve your creativity.</p>
+
+<b>What is the concept behind this app?</b>
+
+<p>There is a theory that you can develop more innovation and creativity by training your brain—your brain
+
+and the neurological connections for creativity can be exercised like a muscle. There are several
+
+methods for helping your brain become creatively stronger. This app is based upon an idea made
+
+popular by James Altucher. He posits that by doing some simple things each day you will increase
+
+creativity, and one of those is to write down 10 ideas on a single topic every day. It doesn’t matter what
+
+the idea or topic is—it can be anything from making a better tennis racquet to how to improve solar
+
+panels. Ten ideas is key though as any fewer doesn’t stretch the creative muscle. It is not intended that
+
+the ideas be looked at again necessarily as the purpose isn’t to come up with a good idea, but rather to
+
+have developed thousands of ideas over time. The goal of this app is to simplify this process, making it
+
+easy to complete the exercise every day. The app will prompt you to complete the exercise, provide you
+
+with a topic if necessary, and provide you space to enter the 10 ideas.</p>
+
+<b>Why did you create this app?</b>
+
+<p>It’s simple. We are all about creativity and wanted to do this exercise. But we found it challenging to
+
+remember to do it every day without a reminder and it became tiresome coming up with new topics.
+
+We knew it could be made easier and an app like this would help us stick with the daily exercise for the
+
+six months.</p>
+
+<b>Who created this app?</b>
+
+<p>This app was programmed by Devika Kumar for dfusion. dfusion (http://www.dfusioninc.com/), is
+
+dedicated to developing scalable science based innovative solutions focused on health and risk
+
+reduction. dfusion is staffed by public health and social and behavioral scientists with substantial
+
+experience leveraging technology to bring science-based research to practice. dfusion works extensively
+
+with expert partners, such as ETR, to work collaboratively to develop and commercialize innovative
+
+commercial products in health and education.</p>
+]]>
+</string>
 </resources>
 
 
