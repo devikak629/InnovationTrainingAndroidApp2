@@ -46,6 +46,8 @@ public class Splash extends ActionBarActivity {
         tx.setTypeface(tf);
         TextView tp = (TextView) findViewById(R.id.textView9);
         tp.setTypeface(tf);
+        TextView tz = (TextView) findViewById(R.id.paragraphsplash);
+        tz.setTypeface(tf);
 
 
     }

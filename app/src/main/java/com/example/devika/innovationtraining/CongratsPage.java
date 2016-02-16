@@ -4,7 +4,11 @@ import com.example.devika.innovationtraining.util.SystemUiHider;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -77,7 +81,7 @@ public class CongratsPage extends Activity {
 
     // Method to start the service
     public void startService() {
-        startService(new Intent(getBaseContext(), CountDownService.class));
+        ComponentName cn = startService(new Intent(getBaseContext(), CountDownService.class));
         Log.e("DEVIKA", "SERVICE STARTED 2");
     }
 
@@ -85,8 +89,23 @@ public class CongratsPage extends Activity {
     public void stopService() {
         stopService(new Intent(getBaseContext(), CountDownService.class));
     }
-
     public static Calendar midnightCalendarFactory(){
+
+        Calendar midnightCalendar = Calendar.getInstance();
+      midnightCalendar.add(Calendar.DAY_OF_YEAR, 1);
+        midnightCalendar.set(Calendar.HOUR_OF_DAY, 0);
+        midnightCalendar.set(Calendar.MINUTE, 0);
+        midnightCalendar.set(Calendar.SECOND, 0);
+        midnightCalendar.set(Calendar.MILLISECOND, 0);
+
+       // midnightCalendar.add(Calendar.SECOND, 30);
+        //midnightCalendar.setTimeInMillis(System.currentTimeMillis()+timeLeft);
+        return midnightCalendar;
+
+        //Log.e()
+    }
+
+    public static Calendar midnightCalendarFactory(long timeLeft){
 
         Calendar midnightCalendar = Calendar.getInstance();
         /*midnightCalendar.add(Calendar.DAY_OF_YEAR, 1);
@@ -95,8 +114,8 @@ public class CongratsPage extends Activity {
         midnightCalendar.set(Calendar.SECOND, 0);
         midnightCalendar.set(Calendar.MILLISECOND, 0);
     */
-        midnightCalendar.add(Calendar.SECOND, 30);
-        midnightCalendar.set(Calendar.MILLISECOND, 0);
+      //  midnightCalendar.add(Calendar.SECOND, 30);
+        midnightCalendar.setTimeInMillis(System.currentTimeMillis()+timeLeft);
         return midnightCalendar;
 
         //Log.e()
@@ -108,22 +127,22 @@ public class CongratsPage extends Activity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.setContentView(R.layout.activity_congrats_page);
 
-       Calendar midnightCalendar = midnightCalendarFactory();
-        midnightCalendar.getTimeInMillis();
-      SharedPreferences settings = getSharedPreferences("Dictionary1", 0);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putLong( "MidnightCalendar",midnightCalendar.getTimeInMillis());
-        editor.commit();
-        text = (TextView) this.findViewById(R.id.timer);
 
+        settingTimer(startTime);
 
-        Calendar c = midnightCalendarFactory();
-        long howMany = (c.getTimeInMillis() - System.currentTimeMillis());
-        countDownTimer = new TwentyFourHoursCountDownTimer(howMany, interval);
-        if (text != null) {
-            text.setText(text.getText() + countDownTimer.timeFromMillis(howMany));
-        }
-        countDownTimer.start();
+        //creating a broadcast receiver that has the time left
+        IntentFilter filter = new IntentFilter("com.example.devika.innovationtraining.CountDownService");
+
+        //MyReceiver receiver = new MyReceiver();
+        registerReceiver(new BroadcastReceiver() {
+                             @Override
+                             public void onReceive(Context context, Intent intent) {
+                                 long result =   intent.getLongExtra("start timer", 1000);
+                                 settingTimer(result);
+                             }
+                         },
+                filter);
+
         Log.e("DEVIKA", "SERVICE STARTED");
         startService();
 
@@ -209,6 +228,26 @@ public class CongratsPage extends Activity {
         ((TextView) findViewById(R.id.InspirationalMessage)).setText(selectString());
     }
 
+    private void settingTimer(long timeLeft) {
+        Calendar midnightCalendar = midnightCalendarFactory(timeLeft);
+        SharedPreferences settings = getSharedPreferences("Dictionary1", 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putLong( "MidnightCalendar", midnightCalendar.getTimeInMillis());
+        editor.commit();
+        text = (TextView) this.findViewById(R.id.timer);
+
+
+        long howMany = (midnightCalendar.getTimeInMillis() - System.currentTimeMillis());
+        if(countDownTimer!=null){
+            countDownTimer.cancel();
+        }
+        countDownTimer = new TwentyFourHoursCountDownTimer(howMany, interval);
+        if (text != null) {
+            text.setText("Time remaining:\n" + "        "  + countDownTimer.timeFromMillis(howMany));
+        }
+        countDownTimer.start();
+    }
+
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -252,10 +291,16 @@ public class CongratsPage extends Activity {
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
 
+    public static int whoAmI = 0;
     public class TwentyFourHoursCountDownTimer extends CountDownTimer {
+
+        //public static int whoAmI = 0;
+        public int me;
 
         public TwentyFourHoursCountDownTimer(long startTime, long interval) {
             super(startTime, interval);
+            me = whoAmI;
+            whoAmI++;
         }
 
         @Override
@@ -268,6 +313,8 @@ public class CongratsPage extends Activity {
         public void onTick(long millisUntilFinished) {
 
             text.setText("Time remaining:\n" + "        " + timeFromMillis(millisUntilFinished));
+
+            Log.e("DEVIKA",  "Number: "+me+"; "+text.getText().toString());
 
         }
 

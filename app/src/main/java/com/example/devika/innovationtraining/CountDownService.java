@@ -17,13 +17,17 @@ package com.example.devika.innovationtraining;
 public class CountDownService extends Service {
 
 
-    private TwentyFourHoursCountDownTimer countDownTimer;
+    private TwentyFourHoursCountDownTimer cdt;
+
     public CountDownService thisCDS = this;
 
     public class TwentyFourHoursCountDownTimer extends CountDownTimer {
 
+        public long milisUntilDone;
+
         public TwentyFourHoursCountDownTimer(long startTime, long interval) {
             super(startTime, interval);
+            milisUntilDone = startTime;
         }
 
         @Override
@@ -34,9 +38,9 @@ public class CountDownService extends Service {
 
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(thisCDS)
-                            .setSmallIcon(R.drawable.menu3button)
-                            .setContentTitle("My notification")
-                            .setContentText("Hello World!")
+                            .setSmallIcon(R.drawable.icon)
+                            .setContentTitle("10 Ideas a Day:")
+                            .setContentText("It's time to get creative!")
                             .setAutoCancel(true);
 
 // Creates an explicit intent for an Activity in your app
@@ -68,6 +72,12 @@ public class CountDownService extends Service {
         @Override
         public void onTick(long millisUntilFinished) {
             Log.e("DEVIKA", "Tick " + millisUntilFinished);
+            milisUntilDone = millisUntilFinished;
+
+        }
+
+        public long getMilisUntilDone(){
+            return milisUntilDone;
         }
 
     }
@@ -79,16 +89,25 @@ public class CountDownService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-return START_STICKY;
+
+        Intent intent2 = new Intent();
+        intent2.setAction("com.example.devika.innovationtraining.CountDownService");
+        intent2.putExtra("start timer", cdt.getMilisUntilDone());
+        sendBroadcast(intent2);
+
+
+
+        return START_STICKY;
     }
     @Override
     public void onCreate(){
         super.onCreate();
         Log.e("DEVIKA", "SERVICE STARTED again");
         // Let it continue running until it is stopped.
+
         Calendar c = CongratsPage.midnightCalendarFactory();
         long howMany = (c.getTimeInMillis() - System.currentTimeMillis());
-        TwentyFourHoursCountDownTimer cdt = new TwentyFourHoursCountDownTimer(howMany, 1000);
+        cdt = new TwentyFourHoursCountDownTimer(howMany, 1000);
         cdt.start();
         Toast.makeText(this, "Service Started", Toast.LENGTH_LONG).show();
     }

@@ -79,7 +79,7 @@ public class HomePage2 extends Activity {
     private SystemUiHider mSystemUiHider;
 
     private void selectString() {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Topics"); //where are we askin question
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Topics2"); //where are we askin question
 
 
         query.countInBackground(new CountCallback () {
@@ -87,10 +87,24 @@ public class HomePage2 extends Activity {
 
             @Override
             public void done(int i, ParseException e) {
-                int x = (int) (Math.random() * i) + 1;
 
-                ParseQuery<ParseObject> query2 = ParseQuery.getQuery("Topics");
-                query2.whereEqualTo("num", x);  //what are we asking for, asking for the number that is 2
+                SharedPreferences settings = getSharedPreferences("countDictionary", 0);
+                long count = settings.getLong("currentTopic", 1);
+
+                if(count>=i){
+                    count=1;
+                }
+                else{count++;}
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putLong("currentTopic", count);
+                editor.commit();
+
+                Log.e("DEVIKA", "i = "+i);
+
+         //       int x = (int) (Math.random() * i) + 1;
+
+                ParseQuery<ParseObject> query2 = ParseQuery.getQuery("Topics2");
+                query2.whereEqualTo("num", count);  //what are we asking for, asking for the number that is 2
 
                 query2.findInBackground(new FindCallback<ParseObject>() {
                     public void done(List<ParseObject> topics, ParseException e) {
@@ -174,6 +188,8 @@ public class HomePage2 extends Activity {
         SharedPreferences.Editor editor = settings.edit();
         editor.clear();
         editor.commit();**/
+
+
 
         mSystemUiHider
                 .setOnVisibilityChangeListener(new SystemUiHider.OnVisibilityChangeListener() {

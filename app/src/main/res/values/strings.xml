@@ -20,7 +20,9 @@
     <string name="title_activity_faq">faq</string>
     <string name="Home_Page2_Options">Loading Topic of the Day...</string>
     <string name="stringthing">Next</string>
-
+    <string name="parag">1. Choose between the provided topic and your own topic (it can be anything).
+    \n2. Enter 10 ideas about that topic.
+    \n3. Notice as your creativity increases-you should see it improve in 3-6 months.</string>
     <string name="title_activity_new_topic">NewTopic</string>
 
     <string name="faq_menu">FAQ</string>
