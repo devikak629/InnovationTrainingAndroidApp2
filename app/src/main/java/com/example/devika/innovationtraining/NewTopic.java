@@ -4,7 +4,10 @@ import com.example.devika.innovationtraining.util.SystemUiHider;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -50,6 +53,8 @@ public class NewTopic extends Activity {
      */
     private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
 
+
+    public BroadcastReceiver receiver;
     /**
      * If set, will toggle the system UI visibility upon interaction. Otherwise,
      * will show the system UI visibility upon interaction.
@@ -107,8 +112,23 @@ public class NewTopic extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e("DEVIKA", "NEWTOPIC OPENED");
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(layout.activity_new_topic);
+
+        IntentFilter filter = new IntentFilter("com.example.devika.innovationtraining.CountDownService.destroy");
+
+        if(receiver==null){
+            receiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                            finish();
+                }
+            };
+        }
+        registerReceiver(receiver, filter);
+
+
 
         final View controlsView = findViewById(id.fullscreen_content_controls);
         final View contentView = findViewById(id.fullscreen_content);
@@ -122,6 +142,8 @@ public class NewTopic extends Activity {
                     // Cached values.
                     int mControlsHeight;
                     int mShortAnimTime;
+
+
 
                     @Override
                     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
@@ -353,5 +375,11 @@ public class NewTopic extends Activity {
         }
     }
 
+@Override
+    public void onDestroy(){
+    super.onDestroy();
+    unregisterReceiver(receiver);
+
+}
 
 }

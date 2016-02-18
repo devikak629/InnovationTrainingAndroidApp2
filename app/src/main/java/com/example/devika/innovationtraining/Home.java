@@ -5,8 +5,11 @@ import com.example.devika.innovationtraining.util.SystemUiHider;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
@@ -49,13 +52,15 @@ import java.util.List;
  *
  * @see SystemUiHider
  */
-public class HomePage2 extends Activity {
+public class Home extends Activity {
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
      */
     private static final boolean AUTO_HIDE = true;
+    private Activity thisClass = this;
 
+    public BroadcastReceiver receiver;
     /**
      * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
      * user interaction before hiding the system UI.
@@ -79,46 +84,58 @@ public class HomePage2 extends Activity {
     private SystemUiHider mSystemUiHider;
 
     private void selectString() {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Topics2"); //where are we askin question
 
 
-        query.countInBackground(new CountCallback () {
+        SharedPreferences settings = getSharedPreferences("Dictionary1", 0);
+
+        String t = settings.getString("Topic", "");
+
+        if (t.equals("")) {
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("Topics2"); //where are we askin question
 
 
-            @Override
-            public void done(int i, ParseException e) {
+            query.countInBackground(new CountCallback() {
 
-                SharedPreferences settings = getSharedPreferences("countDictionary", 0);
-                long count = settings.getLong("currentTopic", 1);
 
-                if(count>=i){
-                    count=1;
-                }
-                else{count++;}
-                SharedPreferences.Editor editor = settings.edit();
-                editor.putLong("currentTopic", count);
-                editor.commit();
+                @Override
+                public void done(int i, ParseException e) {
 
-                Log.e("DEVIKA", "i = "+i);
+                    SharedPreferences settings = getSharedPreferences("countDictionary", 0);
+                    long count = settings.getLong("currentTopic", 1);
 
-         //       int x = (int) (Math.random() * i) + 1;
-
-                ParseQuery<ParseObject> query2 = ParseQuery.getQuery("Topics2");
-                query2.whereEqualTo("num", count);  //what are we asking for, asking for the number that is 2
-
-                query2.findInBackground(new FindCallback<ParseObject>() {
-                    public void done(List<ParseObject> topics, ParseException e) {
-                        if (e == null) {
-                            ((RadioButton) findViewById(R.id.radioButton)).setText(topics.get(0).getString("topicText"));
-                            Log.d("DEVIKA", "Retrieved " + topics.get(0).getString("topicText") + " scores");
-                        } else {
-                            Log.d("DEVIKA", "Error: " + e.getMessage());
-                        }
+                    if (count >= i) {
+                        count = 1;
+                    } else {
+                        count++;
                     }
-                });
-            }
-        });
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putLong("currentTopic", count);
+                    editor.commit();
 
+                    Log.e("DEVIKA", "i = " + i);
+
+                    //       int x = (int) (Math.random() * i) + 1;
+
+                    ParseQuery<ParseObject> query2 = ParseQuery.getQuery("Topics2");
+                    query2.whereEqualTo("num", count);  //what are we asking for, asking for the number that is 2
+
+                    query2.findInBackground(new FindCallback<ParseObject>() {
+                        public void done(List<ParseObject> topics, ParseException e) {
+                            if (e == null) {
+                                ((RadioButton) findViewById(R.id.radioButton)).setText(topics.get(0).getString("topicText"));
+                                Log.d("DEVIKA", "Retrieved " + topics.get(0).getString("topicText") + " scores");
+                            } else {
+                                Log.d("DEVIKA", "Error: " + e.getMessage());
+                            }
+                        }
+                    });
+                }
+            });
+
+        }
+        else{  ((RadioButton) findViewById(R.id.radioButton)).setText(t);
+
+        }
     }
 
     private CharSequence getTopicString() {
@@ -143,6 +160,7 @@ public class HomePage2 extends Activity {
         long milis = settings.getLong("MidnightCalendar", 0);
 
         Log.e("DEVIKA", "WE ARE AT ONRESUME");
+        selectString();
 
         if(milis==0){
 
@@ -150,20 +168,20 @@ public class HomePage2 extends Activity {
             return;
         }
         else{
-        if(c.getTimeInMillis()<milis){
+        if(c.getTimeInMillis() <= milis) {
             Log.e("DEVIKA", "HOMEPAGE---TIME IS LESS");
           ((RadioButton) findViewById(R.id.radioButton)).setText(settings.getString("Topic", ""));
             ((TextView) findViewById(R.id.YourTopic)).setText("");
             ((RadioButton) findViewById(R.id.radioButton)).setChecked(true);
             setEnable(false);
         }
-        else if(c.getTimeInMillis()>=milis) {
+        else if(c.getTimeInMillis()>milis) {
             Log.e("DEVIKA", "MILIS IS MORE");
            SharedPreferences.Editor editor = settings.edit();
             editor.clear();
             editor.commit();
             finish();
-            startActivity(getIntent());
+            startActivity(new Intent(getApplicationContext(), Home.class));
         }
         }
     }
@@ -171,9 +189,24 @@ public class HomePage2 extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e("DEVIKA", "HOMEPAGE OPENED");
        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.setContentView(R.layout.home);
         //   setContentView(R.layout.home);
+
+        IntentFilter filter = new IntentFilter("com.example.devika.innovationtraining.CountDownService.destroy");
+
+        if(receiver==null){
+            receiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    Log.e("DEVIKA", "received message in home");
+                    thisClass.recreate();
+                   // context.startActivity(i);
+                }
+            };
+        }
+        registerReceiver(receiver, filter);
 
         //final View controlsView = findViewById(R.id.fullscreen_content_controls2);
         final View contentView = findViewById(R.id.LinearLayout1);
@@ -301,7 +334,7 @@ public class HomePage2 extends Activity {
             }
         });
 
-        selectString();
+
 
         // TextView tu = (TextView) findViewById(R.id.textView900);
         //tu.setTypeface(tf);
@@ -380,6 +413,19 @@ public class HomePage2 extends Activity {
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.menu_home_page, popup.getMenu());
         popup.show();
+
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if (receiver!=null){
+            unregisterReceiver(receiver);
+            receiver=null;
+
+        }
+        else
+            Log.e("DEVIKA", "recicer is null");
 
     }
 }

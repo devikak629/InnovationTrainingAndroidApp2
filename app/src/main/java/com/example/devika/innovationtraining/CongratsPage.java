@@ -39,6 +39,8 @@ import android.content.SharedPreferences;
  * @see SystemUiHider
  */
 public class CongratsPage extends Activity {
+
+    BroadcastReceiver receiver;
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -92,13 +94,13 @@ public class CongratsPage extends Activity {
     public static Calendar midnightCalendarFactory(){
 
         Calendar midnightCalendar = Calendar.getInstance();
-      midnightCalendar.add(Calendar.DAY_OF_YEAR, 1);
+    /**  midnightCalendar.add(Calendar.DAY_OF_YEAR, 1);
         midnightCalendar.set(Calendar.HOUR_OF_DAY, 0);
         midnightCalendar.set(Calendar.MINUTE, 0);
         midnightCalendar.set(Calendar.SECOND, 0);
-        midnightCalendar.set(Calendar.MILLISECOND, 0);
+        midnightCalendar.set(Calendar.MILLISECOND, 0);**/
 
-       // midnightCalendar.add(Calendar.SECOND, 30);
+        midnightCalendar.add(Calendar.SECOND, 7);
         //midnightCalendar.setTimeInMillis(System.currentTimeMillis()+timeLeft);
         return midnightCalendar;
 
@@ -124,6 +126,7 @@ public class CongratsPage extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e("DEVIKA", "congrats OPENED");
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.setContentView(R.layout.activity_congrats_page);
 
@@ -134,14 +137,16 @@ public class CongratsPage extends Activity {
         IntentFilter filter = new IntentFilter("com.example.devika.innovationtraining.CountDownService");
 
         //MyReceiver receiver = new MyReceiver();
-        registerReceiver(new BroadcastReceiver() {
-                             @Override
-                             public void onReceive(Context context, Intent intent) {
-                                 long result =   intent.getLongExtra("start timer", 1000);
-                                 settingTimer(result);
-                             }
-                         },
-                filter);
+        if (receiver==null){
+            receiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    long result =   intent.getLongExtra("start timer", 0);
+                    settingTimer(result);
+                }
+            };
+        }
+        registerReceiver(receiver, filter);
 
         Log.e("DEVIKA", "SERVICE STARTED");
         startService();
@@ -307,6 +312,8 @@ public class CongratsPage extends Activity {
         public void onFinish() {
 
             text.setText("Time's Up!");
+
+
         }
 
         @Override
@@ -331,5 +338,15 @@ public class CongratsPage extends Activity {
             // DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
             return String.format("%02d:%02d:%02d", outputhours, outputminutes, outputseconds);
         }
+    }
+
+    @Override
+
+    public void onDestroy(){
+        super.onDestroy();
+        unregisterReceiver(receiver);
+        finish();
+
+
     }
 }

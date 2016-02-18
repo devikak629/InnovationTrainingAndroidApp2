@@ -27,9 +27,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".HomePage2"
+            android:name=".Home"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_home_page2"
+            android:label="Home"
 
             android:theme="@style/FullscreenTheme" >
             <intent-filter>

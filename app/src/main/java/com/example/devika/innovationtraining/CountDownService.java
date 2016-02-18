@@ -44,7 +44,7 @@ public class CountDownService extends Service {
                             .setAutoCancel(true);
 
 // Creates an explicit intent for an Activity in your app
-            Intent resultIntent = new Intent(thisCDS, HomePage2.class);
+            Intent resultIntent = new Intent(thisCDS, Home.class);
 
 // The stack builder object will contain an artificial back stack for the
 // started Activity.
@@ -52,7 +52,7 @@ public class CountDownService extends Service {
 // your application to the Home screen.
             TaskStackBuilder stackBuilder = TaskStackBuilder.create(thisCDS);
 // Adds the back stack for the Intent (but not the Intent itself)
-            stackBuilder.addParentStack(HomePage2.class);
+            stackBuilder.addParentStack(Home.class);
 // Adds the Intent that starts the Activity to the top of the stack
             stackBuilder.addNextIntent(resultIntent);
             PendingIntent resultPendingIntent =
@@ -116,5 +116,10 @@ public class CountDownService extends Service {
     public void onDestroy() {
         super.onDestroy();
         Toast.makeText(this, "Service Destroyed", Toast.LENGTH_LONG).show();
+
+        Intent destroy = new Intent();
+        destroy.setAction("com.example.devika.innovationtraining.CountDownService.destroy");
+        // destroy.putExtra("start timer", cdt.getMilisUntilDone());
+        sendBroadcast(destroy);
     }
 }

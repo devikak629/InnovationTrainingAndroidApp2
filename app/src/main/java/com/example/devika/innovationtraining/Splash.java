@@ -31,9 +31,10 @@ public class Splash extends ActionBarActivity {
         contentView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent nextScreen = new Intent(getApplicationContext(), HomePage2.class);
-
+                Log.e("DEVIKA", "SLPASHE CLICKED");
+                Intent nextScreen = new Intent(getApplicationContext(), Home.class);
                 startActivity(nextScreen);
+                finish();
             }
         });
 
@@ -51,6 +52,8 @@ public class Splash extends ActionBarActivity {
 
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
