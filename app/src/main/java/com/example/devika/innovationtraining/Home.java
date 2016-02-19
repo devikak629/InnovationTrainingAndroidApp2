@@ -24,6 +24,7 @@ import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -190,7 +191,8 @@ public class Home extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.e("DEVIKA", "HOMEPAGE OPENED");
-       this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         this.setContentView(R.layout.home);
         //   setContentView(R.layout.home);
 
@@ -268,13 +270,13 @@ public class Home extends Activity {
         contentView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*
-                if (TOGGLE_ON_CLICK) {
-                    mSystemUiHider.toggle();
+
+         /**       if (TOGGLE_ON_CLICK) {
+                    mSystemUiHider.show();
                 } else {
                     mSystemUiHider.show();
                 }
-                */
+**/
             }
         });
 
@@ -371,7 +373,7 @@ public class Home extends Activity {
         // Trigger the initial hide() shortly after the activity has been
         // created, to briefly hint to the user that UI controls
         // are available.
-        delayedHide(0);
+        delayedHide(100);
     }
 
 
@@ -408,13 +410,6 @@ public class Home extends Activity {
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
 
-    public void showPopup(View v) {
-        PopupMenu popup = new PopupMenu(this, v);
-        MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.menu_home_page, popup.getMenu());
-        popup.show();
-
-    }
 
     @Override
     public void onDestroy(){

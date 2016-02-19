@@ -15,7 +15,7 @@
 
         <activity
             android:name="Splash"
-            android:label="@string/title_activity_splash"
+
             android:launchMode="singleInstance"
             android:noHistory="true">
 
@@ -29,8 +29,6 @@
         <activity
             android:name=".Home"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="Home"
-
             android:theme="@style/FullscreenTheme" >
             <intent-filter>
 
@@ -40,7 +38,7 @@
         <activity
             android:name=".CongratsPage"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_congrats_page"
+
             android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".KeepersPage"
@@ -65,7 +63,7 @@
         <activity
             android:name=".NewTopic"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_new_topic"
+
             android:theme="@style/FullscreenTheme"
             android:windowSoftInputMode="adjustPan" />
 

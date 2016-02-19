@@ -94,13 +94,13 @@ public class CongratsPage extends Activity {
     public static Calendar midnightCalendarFactory(){
 
         Calendar midnightCalendar = Calendar.getInstance();
-    /**  midnightCalendar.add(Calendar.DAY_OF_YEAR, 1);
+     midnightCalendar.add(Calendar.DAY_OF_YEAR, 1);
         midnightCalendar.set(Calendar.HOUR_OF_DAY, 0);
         midnightCalendar.set(Calendar.MINUTE, 0);
         midnightCalendar.set(Calendar.SECOND, 0);
-        midnightCalendar.set(Calendar.MILLISECOND, 0);**/
+        midnightCalendar.set(Calendar.MILLISECOND, 0);
 
-        midnightCalendar.add(Calendar.SECOND, 7);
+        //midnightCalendar.add(Calendar.SECOND, 7);
         //midnightCalendar.setTimeInMillis(System.currentTimeMillis()+timeLeft);
         return midnightCalendar;
 
