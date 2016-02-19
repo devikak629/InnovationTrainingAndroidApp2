@@ -1,0 +1,36 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:background="#00cc63"
+    tools:context="com.example.devika.innovationtraining.ProgressPage">
+
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
+
+    <!-- This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows. -->
+    <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Progress"
+            android:id="@+id/textView4"
+            android:layout_gravity="center|top"
+            android:textSize="45sp"
+            android:enabled="true"
+            android:textColor="#ffffff"
+            android:layout_marginTop="100dp" />
+
+        <CalendarView
+            android:layout_width="256dp"
+            android:layout_height="267dp"
+            android:id="@+id/calendarView"
+            android:layout_gravity="center"
+            android:showWeekNumber="false"
+            android:layout_marginBottom="-75dp" />
+
+    </FrameLayout>
+
+</FrameLayout>

@@ -1,0 +1,186 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.devika.innovationtraining.Home"
+    android:background="#000000"
+    android:clickable="true">
+
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
+
+    <!-- This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows. -->
+
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#8bacff"
+        android:clickable="true">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="519dp"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="75dp"
+            android:id="@+id/LinearLayout1"
+            android:visibility="visible"
+            android:paddingTop="30dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:visibility="visible"
+                android:id="@+id/linearlayout3">
+
+                <ImageView
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:id="@+id/imageView"
+                    android:src="@drawable/logogreen"
+                    android:background="#ffffff"
+                    android:contentDescription="menu"
+                    android:layout_gravity="center_horizontal" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="InnovationTraining:"
+                android:id="@+id/textView3"
+                android:textSize="30dp"
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:layout_marginTop="30dp"
+                android:visibility="visible"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10 Ideas a Day"
+                android:id="@+id/textView5"
+                android:textSize="30dp"
+                android:textColor="#ffffff"
+                android:visibility="visible"
+                android:layout_gravity="center_horizontal"
+                android:paddingBottom="25dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Today&apos;s Topic is..."
+                android:id="@+id/textViewww"
+                android:layout_gravity="center_horizontal"
+                android:paddingBottom="20dp"
+                android:textSize="30dp"
+                android:textColor="#ffe135"
+                android:textAlignment="center" />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radiogroup"
+                android:gravity="center|top"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal">
+                //android:layout_alignParentEnd="false"
+                //android:layout_alignParentStart="false"
+
+
+                <RadioButton
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Home_Page2_Options"
+                    android:id="@+id/radioButton"
+                    android:textSize="20sp"
+                    android:textColor="#ffffff"
+                    android:enabled="true"
+                    android:layout_gravity="left"
+                    android:clickable="true"
+                    android:checked="true"
+                    android:textAlignment="center"
+                    android:buttonTint="@color/your_color"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioButton2"
+                    android:enabled="true"
+                    android:clickable="true"
+                    android:layout_gravity="left"
+                    android:buttonTint="@color/your_color"/>
+
+            </RadioGroup>
+
+            <EditText
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/YourTopic"
+                android:text="Or tap to enter your own topic!"
+                android:editable="true"
+                android:enabled="true"
+                android:layout_alignBottom="@+id/radiogroup"
+                android:textSize="20sp"
+                android:textColor="#ffffff"
+                android:clickable="true"
+                android:nestedScrollingEnabled="false"
+                android:layout_alignLeft="@+id/radiogroup"
+                android:layout_alignStart="@+id/radiogroup"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="-30dp"
+                android:layout_marginLeft="20dp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/homeNextButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+
+            android:text="Next"
+            android:background="#0072bc"
+            android:textColor="#ffffff"
+            android:textSize="30sp"
+            android:enabled="true"
+            android:visibility="visible"
+            android:clickable="true"
+            android:textStyle="normal"
+            android:layout_gravity="bottom"
+            android:focusable="false" />
+
+        <ImageButton
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@drawable/faq_icon"
+            android:clickable="true"
+            android:enabled="true"
+            android:background="#8bacff"
+            android:id="@+id/faqbutton"
+            android:layout_gravity="left|top"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:layout_marginTop="30dp" />
+    </FrameLayout>
+
+    <!--Button android:id="@+id/homeNextButton"
+        android:layout_width="match_parent" android:layout_height="45dp"
+        android:text="Next"
+        android:longClickable="false"
+        android:enabled="true"
+        android:clickable="true"
+        android:textColor="#ffffff"
+        android:textSize="30sp"
+        android:background="#0072bc"
+        android:visibility="visible"
+        android:layout_gravity="center_vertical|bottom" /-->
+
+
+</FrameLayout>
