@@ -34,7 +34,7 @@ public class CountDownService extends Service {
         public void onFinish() {
             Log.e("DEVIKA", "SERVICEAND TIMER  FINISHED");
             stopSelf();
-            Toast.makeText(thisCDS, "Service Ended", Toast.LENGTH_LONG).show();
+           // Toast.makeText(thisCDS, "Service Ended", Toast.LENGTH_LONG).show();
 
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(thisCDS)
@@ -71,7 +71,7 @@ public class CountDownService extends Service {
 
         @Override
         public void onTick(long millisUntilFinished) {
-            Log.e("DEVIKA", "Tick " + millisUntilFinished);
+           // Log.e("DEVIKA", "Tick " + millisUntilFinished);
             milisUntilDone = millisUntilFinished;
 
         }
@@ -109,13 +109,13 @@ public class CountDownService extends Service {
         long howMany = (c.getTimeInMillis() - System.currentTimeMillis());
         cdt = new TwentyFourHoursCountDownTimer(howMany, 1000);
         cdt.start();
-        Toast.makeText(this, "Service Started", Toast.LENGTH_LONG).show();
+       // Toast.makeText(this, "Service Started", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Toast.makeText(this, "Service Destroyed", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Time's Up!", Toast.LENGTH_LONG).show();
 
         Intent destroy = new Intent();
         destroy.setAction("com.example.devika.innovationtraining.CountDownService.destroy");

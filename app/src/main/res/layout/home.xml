@@ -76,7 +76,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Today&apos;s Topic is..."
+                android:text="Today's Topic is..."
                 android:id="@+id/textViewww"
                 android:layout_gravity="center_horizontal"
                 android:paddingBottom="20dp"
@@ -116,7 +116,8 @@
                     android:enabled="true"
                     android:clickable="true"
                     android:layout_gravity="left"
-                    android:buttonTint="@color/your_color"/>
+                    android:buttonTint="@color/your_color"
+                    android:focusableInTouchMode="false" />
 
             </RadioGroup>
 
@@ -136,7 +137,7 @@
                 android:layout_alignStart="@+id/radiogroup"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="-30dp"
-                android:layout_marginLeft="20dp" />
+                android:layout_marginLeft="30dp" />
 
         </LinearLayout>
 

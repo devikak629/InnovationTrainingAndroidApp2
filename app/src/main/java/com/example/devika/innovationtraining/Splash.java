@@ -51,6 +51,7 @@ public class Splash extends ActionBarActivity {
         tz.setTypeface(tf);
 
 
+
     }
 
 

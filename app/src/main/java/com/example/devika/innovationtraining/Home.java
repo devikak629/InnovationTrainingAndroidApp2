@@ -92,7 +92,7 @@ public class Home extends Activity {
         String t = settings.getString("Topic", "");
 
         if (t.equals("")) {
-            ParseQuery<ParseObject> query = ParseQuery.getQuery("Topics2"); //where are we askin question
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("Topics"); //where are we askin question
 
 
             query.countInBackground(new CountCallback() {
@@ -117,7 +117,7 @@ public class Home extends Activity {
 
                     //       int x = (int) (Math.random() * i) + 1;
 
-                    ParseQuery<ParseObject> query2 = ParseQuery.getQuery("Topics2");
+                    ParseQuery<ParseObject> query2 = ParseQuery.getQuery("Topics");
                     query2.whereEqualTo("num", count);  //what are we asking for, asking for the number that is 2
 
                     query2.findInBackground(new FindCallback<ParseObject>() {
@@ -338,6 +338,9 @@ public class Home extends Activity {
 
 
 
+
+
+
         // TextView tu = (TextView) findViewById(R.id.textView900);
         //tu.setTypeface(tf);
 
@@ -345,8 +348,8 @@ public class Home extends Activity {
         ((EditText)findViewById(R.id.YourTopic)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((EditText)findViewById(R.id.YourTopic)).setText("");
-
+                ((EditText) findViewById(R.id.YourTopic)).setText("");
+                ((RadioButton) findViewById(R.id.radioButton2)).setChecked(true);
 
             }
         });

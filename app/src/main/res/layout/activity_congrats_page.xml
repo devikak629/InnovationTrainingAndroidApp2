@@ -15,11 +15,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Inspirational Message!"
+            android:text=""
             android:id="@+id/InspirationalMessage"
             android:layout_gravity="center"
             android:textColor="#ff9900"
-            android:textSize="31sp"
+            android:textSize="18sp"
             android:textAlignment="center"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:gravity="center"

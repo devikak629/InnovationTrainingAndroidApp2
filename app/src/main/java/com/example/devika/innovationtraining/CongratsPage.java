@@ -1,6 +1,11 @@
 package com.example.devika.innovationtraining;
 
 import com.example.devika.innovationtraining.util.SystemUiHider;
+import com.parse.CountCallback;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -18,6 +23,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.os.CountDownTimer;
 
@@ -25,6 +31,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import android.view.Window;
 import android.content.SharedPreferences;
@@ -74,11 +81,57 @@ public class CongratsPage extends Activity {
     private final long interval = 1000;
 
 
-    public String selectString() {
-        Resources res = getResources();
-        String[] inspirationalMessages = res.getStringArray(R.array.inspirationalMessages);
-        int x = (int) (Math.random() * inspirationalMessages.length);
-        return inspirationalMessages[x];
+    public void selectString() {
+        SharedPreferences settings = getSharedPreferences("Dictionary1", 0);
+
+        String t = settings.getString("Message", "");
+
+        if (t.equals("")) {
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("Messages"); //where are we askin question
+
+
+            query.countInBackground(new CountCallback() {
+
+
+                @Override
+                public void done(int i, ParseException e) {
+
+                    SharedPreferences settings = getSharedPreferences("countDictionary", 0);
+                    long count = settings.getLong("currentMessage", 1);
+
+                    if (count >= i) {
+                        count = 1;
+                    } else {
+                        count++;
+                    }
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putLong("currentMessage", count);
+                    editor.commit();
+
+                    Log.e("DEVIKA", "i = " + i);
+
+                    //       int x = (int) (Math.random() * i) + 1;
+
+                    ParseQuery<ParseObject> query2 = ParseQuery.getQuery("Messages");
+                    query2.whereEqualTo("num", count);  //what are we asking for, asking for the number that is 2
+
+                    query2.findInBackground(new FindCallback<ParseObject>() {
+                        public void done(List<ParseObject> topics, ParseException e) {
+                            if (e == null) {
+                                ((TextView) findViewById(R.id.InspirationalMessage)).setText(topics.get(0).getString("messageText"));
+                                Log.d("DEVIKA", "Retrieved " + topics.get(0).getString("messageText"));
+                            } else {
+                                Log.d("DEVIKA", "Error: " + e.getMessage());
+                            }
+                        }
+                    });
+                }
+            });
+
+        }
+        else{  ((TextView) findViewById(R.id.InspirationalMessage)).setText(t);
+
+        }
     }
 
     // Method to start the service
@@ -94,13 +147,13 @@ public class CongratsPage extends Activity {
     public static Calendar midnightCalendarFactory(){
 
         Calendar midnightCalendar = Calendar.getInstance();
-     midnightCalendar.add(Calendar.DAY_OF_YEAR, 1);
+  /** midnightCalendar.add(Calendar.DAY_OF_YEAR, 1);
         midnightCalendar.set(Calendar.HOUR_OF_DAY, 0);
         midnightCalendar.set(Calendar.MINUTE, 0);
         midnightCalendar.set(Calendar.SECOND, 0);
-        midnightCalendar.set(Calendar.MILLISECOND, 0);
+        midnightCalendar.set(Calendar.MILLISECOND, 0);**/
 
-        //midnightCalendar.add(Calendar.SECOND, 7);
+      midnightCalendar.add(Calendar.SECOND, 7);
         //midnightCalendar.setTimeInMillis(System.currentTimeMillis()+timeLeft);
         return midnightCalendar;
 
@@ -230,7 +283,7 @@ public class CongratsPage extends Activity {
 
         findViewById(R.id.Next).setOnTouchListener(mDelayHideTouchListener);
 
-        ((TextView) findViewById(R.id.InspirationalMessage)).setText(selectString());
+        selectString();
     }
 
     private void settingTimer(long timeLeft) {
